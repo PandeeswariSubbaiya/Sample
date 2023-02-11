@@ -1,0 +1,21 @@
+- hosts: all
+  remote_user: ec2-user
+  become: yes
+  tasks: 
+        - name: Downloading tomcat
+          get_url:
+          url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz
+          dest: /opt
+        - name: extracting tomcat
+          unarchive:
+            src: /opt/apache-tomcat-9.0.71.tar.gz
+            dest: /opt
+            remote_src: yes
+        - name: downloading tomcat war file
+          get_url:
+            url: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+            dest: /opt/apache-tomcat-9.0.71/webapps
+        - name: starting tomcat
+          shell: nohub /opt/bin/startup.sh &
+          tags:
+            - startup
