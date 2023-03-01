@@ -1,5 +1,4 @@
 node{
-    def buildnumber = BUILD_NUMBER
     stage('SCM Checkout'){
      git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/springboot-app.git'
    }
