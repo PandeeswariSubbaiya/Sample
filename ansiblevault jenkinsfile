@@ -27,9 +27,9 @@ node{
    stage('Dependency check'){
         dependencyCheck additionalArguments: '--format	HTML', odcInstallation: 'Dp-Check'
     }
-    stage('SSH connectivity and user creation') {
-          ansiblePlaybook credentialsId: 'private-key-ansible-vault', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'ssh.yml', vaultCredentialsId: 'ansible_password'
-        }
+    //stage('SSH connectivity and user creation') {
+          //ansiblePlaybook credentialsId: 'private-key-ansible-vault', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'ssh.yml', vaultCredentialsId: 'ansible_password'
+        //}
     stage('Deploy Tomcat') {
           ansiblePlaybook credentialsId: 'private-key-ansible-vault', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'tomcatplaybook.yml', vaultCredentialsId: 'ansible_password'
     }
