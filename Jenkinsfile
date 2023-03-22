@@ -23,7 +23,7 @@ stages {
         }
        stage('Compile') {
            steps {
-              sh 'mvn clean test package'
+              sh "${mvnHome}/bin/mvn clean package"
             }
         }
     }
