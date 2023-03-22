@@ -1,22 +1,25 @@
 pipeline {
-    agent any
-    stages {
-        stage('Merge release branch to main branch') {
-            when {
-                branch 'release'
-            }
+  agent any
+  tools {
+    maven 'maven3'
+  }
+  stages {
+    stage('Merge release to main') {
+      steps {
+        script {
+          def releaseBranch = 'release'
+          def mainBranch = 'main'
+          git branch: releaseBranch, url: 'https://github.com/PandeeswariSubbaiya/Sample.git' 
+        }
+      }
+    }
+stage('Build') {
             steps {
-                // Checkout the main branch
-                git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
-                
-                // Checkout the release branch
-                git branch: 'release', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
-                
-                // Merge the changes from the release branch to the main branch
-                sh 'git merge release'
-                
-                // Push the changes to the main branch
-                sh 'git push origin main'
+              script {
+                def mvnHome = tool name: 'maven3', type: 'maven'
+                sh "${mvnHome}/bin/mvn clean package"
+               // sh 'mvn clean package'
+              }
             }
         }
     }
