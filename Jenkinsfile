@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools { 
-        maven 'maven3' 
-           }
     environment{
       def BRANCH_NAME ='GIT_BRANCH'
   }
@@ -23,6 +20,7 @@ stages {
         }
        stage('Compile') {
            steps {
+               def mvnHome =  tool name: 'maven3', type: 'maven' 
               sh "${mvnHome}/bin/mvn clean package"
             }
         }
