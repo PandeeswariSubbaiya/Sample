@@ -1,33 +1,22 @@
-pipeline {
-    agent any
-    tools {
-        maven 'maven3'
-    }
-    environment{
-      def mvnHome =  tool name: 'maven3', type: 'maven' 
-      def BRANCH_NAME ='GIT_BRANCH'
+node {
+  // Define Maven tool
+  def mvnHome = tool 'maven3'
+
+  // Define branch name
+  def branchName = env.GIT_BRANCH
+
+  // Checkout Git repository
+  if (branchName.contains('main')) {
+    echo 'Hello from main branch'
+    git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
+  } else {
+    echo "Run this stage only if the branch is not main"
+    git branch: 'release', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
   }
-stages {
-      stage('GIT checkout') {
-           steps {
-               script{
-                   if (env.GIT_BRANCH.contains('main')) {
-                echo 'Hello from main branch'
-                git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
-                }
-               else {
-                   echo "Run this stage only if the branch is not main"
-                  git branch: 'release', url: 'https://github.com/PandeeswariSubbaiya/Sample.git' 
-               }
-               }
-          }
-        }
-       stage('Compile') {
-           steps {
-            sh 'pwd'
-            sh 'ls -la'
-            sh "${mvnHome}/bin/mvn clean package"
-            }
-        }
-    }
+
+  // Compile the project
+  stage('Compile') {
+    // Run Maven command
+    sh "${mvnHome}/bin/mvn clean package"
+  }
 }
