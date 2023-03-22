@@ -24,7 +24,7 @@ stages {
         }
       stage('Compile') {
            steps {
-            sh "${mvnHome}/bin/mvn clean package"
+            sh 'mvn clean test package'
             }
         }
     }
