@@ -4,6 +4,7 @@ pipeline {
         maven 'maven3' 
            }
     environment{
+      def mvnHome =  tool name: 'maven3', type: 'maven' 
       def BRANCH_NAME ='GIT_BRANCH'
   }
 stages {
