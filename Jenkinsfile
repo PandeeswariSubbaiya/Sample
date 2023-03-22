@@ -22,8 +22,7 @@ stages {
           }
         }
        stage('Compile') {
-           steps {
-            def mvnHome =  tool name: 'maven3', type: 'maven'   
+           steps { 
             sh "${mvnHome}/bin/mvn clean package"
             }
         }
