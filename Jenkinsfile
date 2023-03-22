@@ -1,11 +1,8 @@
-pipeline {
-    agent any
+node {
     environment{
       def BRANCH_NAME ='GIT_BRANCH'
   }
-stages {
       stage('GIT checkout') {
-           steps {
                script{
                    if (env.GIT_BRANCH.contains('main')) {
                         echo 'Hello from main branch'
@@ -17,12 +14,8 @@ stages {
                }
                }
           }
-        }
        stage('Compile') {
-           steps {
-               def mvnHome =  tool name: 'maven3', type: 'maven' 
-              sh "${mvnHome}/bin/mvn clean package"
+               def mvnHome =  tool name: 'maven3', type: 'maven'
+               sh "${mvnHome}/bin/mvn clean package"
             }
-        }
-    }
 }
