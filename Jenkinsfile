@@ -15,10 +15,8 @@ stages {
                 git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/ansible_tomcat.git'
                 }
                else {
-    //        sh echo 'Hello from ${env.BRANCH_NAME} branch!'"
-     //              echo 'Hello from ${env.BRANCH_NAME} branch!
-                   echo "Run this stage only if the branch is not main"
-                  git branch: 'dev', url: 'https://github.com/PandeeswariSubbaiya/ansible_tomcat.git' 
+                  echo "Run this stage only if the branch is not main"
+                  git branch: 'release', url: 'https://github.com/PandeeswariSubbaiya/ansible_tomcat.git' 
                }
                }
           }
