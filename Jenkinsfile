@@ -1,36 +1,32 @@
 pipeline {
     agent any
-    
-    environment {
-        GIT_BRANCH = "release"
-        GIT_REPO = "https://github.com/PandeeswariSubbaiya/Sample.git"
-    }
-    
-    stages {
-        stage('Clone repository') {
-            steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: "${env.GIT_BRANCH}"]],
-                          userRemoteConfigs: [[url: "${env.GIT_REPO}"]]])
+    tools { 
+        maven 'maven3' 
+           }
+    environment{
+      def BRANCH_NAME ='GIT_BRANCH'
+  }
+stages {
+      stage('GIT checkout') {
+           steps {
+               script{
+                   if (env.GIT_BRANCH.contains('main')) {
+                echo 'Hello from main branch'
+                git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/ansible_tomcat.git'
+                }
+               else {
+    //        sh echo 'Hello from ${env.BRANCH_NAME} branch!'"
+     //              echo 'Hello from ${env.BRANCH_NAME} branch!
+                   echo "Run this stage only if the branch is not main"
+                  git branch: 'dev', url: 'https://github.com/PandeeswariSubbaiya/ansible_tomcat.git' 
+               }
+               }
+          }
+        }
+       stage('Compile') {
+           steps {
+               sh 'mvn clean test package'
             }
-        }
-     stage('Merge to main') {
-            steps {
-                sh """
-                git checkout main
-                git merge ${env.GIT_BRANCH}
-                git push -u origin main
-                """
-            }
-        }
-    }
-    
-    post {
-        success {
-            echo 'Changes merged successfully!'
-        }
-        failure {
-            echo 'Failed to merge changes!'
         }
     }
 }
