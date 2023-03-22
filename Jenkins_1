@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Merge release branch to main branch') {
+            when {
+                branch 'release'
+            }
+            steps {
+                // Checkout the main branch
+                git branch: 'main', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
+                
+                // Checkout the release branch
+                git branch: 'release', url: 'https://github.com/PandeeswariSubbaiya/Sample.git'
+                
+                // Merge the changes from the release branch to the main branch
+                sh 'git merge release'
+                
+                // Push the changes to the main branch
+                sh 'git push origin main'
+            }
+        }
+    }
+}
