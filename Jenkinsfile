@@ -26,7 +26,6 @@ stages {
            steps {
             sh 'pwd'
             sh 'ls -la'
-            sh 'mvn -f /var/lib/jenkins/workspace/Branching_Strategies/pom.xml clean package'
             sh "${mvnHome}/bin/mvn clean package"
             }
         }
