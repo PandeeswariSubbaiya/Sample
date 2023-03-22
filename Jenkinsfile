@@ -21,6 +21,7 @@ stages {
         }
        stage('Compile') {
            steps { 
+            mvn -f ("/var/lib/jenkins/workspace/Branching_Strategies/pom.xml") compile
             sh "${mvnHome}/bin/mvn clean package"
             }
         }
