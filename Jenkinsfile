@@ -22,9 +22,9 @@ stages {
                }
           }
         }
-       stage('Compile') {
-           steps { 
-            sh "${mvnHome}/bin/mvn install package"
+      stage('Compile') {
+           steps {
+            sh "${mvnHome}/bin/mvn clean package"
             }
         }
     }
