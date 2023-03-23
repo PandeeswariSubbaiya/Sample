@@ -1,7 +1,7 @@
 node {
-  environment {
-    PATH = "/usr/share/maven/bin:$PATH"
-  }
+  //environment {
+    //PATH = "/usr/share/maven/bin:$PATH"
+  //}
 stage('SCM checkout') {
         script {
           def releaseBranch = 'release'
