@@ -9,4 +9,7 @@ stage('SCM checkout') {
           git branch: releaseBranch, url: 'https://github.com/PandeeswariSubbaiya/Sample.git' 
         }
       }
+ stage('Build') {
+      def mvnHome =  tool name: 'maven3', type: 'maven'
+     }
 }
