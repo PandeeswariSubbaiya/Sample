@@ -4,7 +4,7 @@ pipeline {
     maven "maven3"
   }
   environment {
-    PATH = "/usr/share:$PATH"
+    PATH = "/usr/share/maven/bin:$PATH"
   }
   stages {
     stage('Merge release to main') {
