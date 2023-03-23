@@ -1,7 +1,7 @@
 pipeline {
   agent any
-  environment {
-    PATH = "/opt/apache-maven-3.9.0/bin/mvn:$PATH"
+  tools {
+    maven "maven3"
   }
   stages {
     stage('Merge release to main') {
