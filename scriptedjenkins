@@ -1,0 +1,19 @@
+node {
+  environment {
+    PATH = "/usr/share/maven/bin:$PATH"
+  }
+stage('SCM checkout') {
+        script {
+          def releaseBranch = 'release'
+          def mainBranch = 'main'
+          git branch: releaseBranch, url: 'https://github.com/PandeeswariSubbaiya/Sample.git' 
+        }
+      }
+stage('Build') {
+          script {
+                def mvnHome = tool name: 'maven3', type: 'maven'
+                sh "${mvnHome}/bin/mvn clean package"
+               // sh 'mvn clean package'
+              }
+          }
+    }
