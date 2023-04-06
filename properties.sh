@@ -1,0 +1,5 @@
+# properties.sh
+CPU_THRESHOLD_PROP=50
+MEM_THRESHOLD_PROP=80
+DISK_THRESHOLD_PROP=80
+EMAIL_PROP=pandeeswari@lntinfotech.com
