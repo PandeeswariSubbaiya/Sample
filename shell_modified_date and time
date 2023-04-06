@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Define usage function
+usage() {
+    echo "Usage: $0 [-d <days>] [-f <from_date>] [-t <to_date>]" >&2
+    exit 1
+}
+
+# Parse command line options using getopts
+while getopts ":d:f:t:" opt; do
+    case ${opt} in
+        d)
+            days=${OPTARG}
+            ;;
+        f)
+            from_date=${OPTARG}
+            ;;
+        t)
+            to_date=${OPTARG}
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            usage
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            usage
+            ;;
+    esac
+done
+
+# Validate parameters
+if [[ -z $days && -z $from_date && -z $to_date ]]; then
+    echo "Please provide at least one of the following parameters: -d <days>, -f <from_date>, -t <to_date>" >&2
+    usage
+fi
+
+if [[ $from_date && $to_date && $from_date > $to_date ]]; then
+    echo "The from_date cannot be greater than the to_date." >&2
+    usage
+fi
+
+if [[ $days && ($from_date || $to_date) ]]; then
+    echo "Please provide either -d <days> or -f <from_date> and -t <to_date>, not both." >&2
+    usage
+fi
+
+# Search for files based on user input
+if [[ $days ]]; then
+    echo "Files created within the last $days days:"
+    find . -type f -ctime -$days -exec ls -lh {} + | awk '{print $5, $9}'
+elif [[ $from_date && $to_date ]]; then
+    echo "Files created between $from_date and $to_date:"
+    find . -type f -newermt "$from_date" ! -newermt "$to_date" -exec ls -lh {} + | awk '{print $5, $9}'
+else
+    echo "Unknown error occurred." >&2
+    usage
+fi
