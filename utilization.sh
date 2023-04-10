@@ -9,9 +9,9 @@ MEM_THRESHOLD=$MEM_THRESHOLD_PROP
 DISK_THRESHOLD=$DISK_THRESHOLD_PROP
 
 # Get the current CPU, memory, and disk usage
-CPU_USAGE=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}')
-MEM_USAGE=$(free | awk '/Mem/{printf("%.2f"), $3/$2*100}')
-DISK_USAGE=$(df -h / | awk '{print $5}' | tail -n 1 | sed 's/%//')
+CPU_USAGE=$(top -b -n 1 | grep "%Cpu(s)" | awk '{print $2}')
+MEM_USAGE=$(free | awk 'NR==2{printf "%.2f", $3/$2*100}')
+DISK_USAGE=$(df -h / | awk 'NR==2{printf "%s", "%p"}' | cut -d'%' -f1)
 
 # Create a table of the metrics
 echo "CPU Usage | Memory Usage | Disk Usage" > metrics.txt
